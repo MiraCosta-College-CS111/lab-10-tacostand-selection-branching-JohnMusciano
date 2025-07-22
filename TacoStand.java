@@ -1,7 +1,13 @@
+import javax.sound.midi.Track;
+
 public class TacoStand
 {
     /* CONSTANT VARIABLES */
 	public static final String BAR = "----------------------------------------";
+	public static final double kCostCAsada = 2.5;
+	public static final double kCostPAsado = 1.75;
+	public static final double kCostLengua = 3.0;
+	public static final double kCostUltimate = 18.0;
 
 	/* STATIC VARIABLES */
 	private static int numAsada = 0, numPollo = 0, numLengua = 0, numUltimate = 0;
@@ -22,10 +28,10 @@ public class TacoStand
 	public static void printMenu()
 	{
 		System.out.println("Menu options:\n" + TacoStand.BAR);
-		System.out.printf("%2d. %-21s [$%5.2f]%n", 1, "Carne Asada (Steak)", 2.5);
-		System.out.printf("%2d. %-21s [$%5.2f]%n", 2, "Pollo Asado (Chicken)", 1.75);
-		System.out.printf("%2d. %-21s [$%5.2f]%n", 3, "Lengua (Beef Tongue)", 3.0);
-		System.out.printf("%2d. %-21s [$%5.2f]%n", 4, "Ultimate Taco", 18.0);
+		System.out.printf("%2d. %-21s [$%5.2f]%n", 1, "Carne Asada (Steak)", kCostCAsada);
+		System.out.printf("%2d. %-21s [$%5.2f]%n", 2, "Pollo Asado (Chicken)", kCostPAsado);
+		System.out.printf("%2d. %-21s [$%5.2f]%n", 3, "Lengua (Beef Tongue)", kCostLengua);
+		System.out.printf("%2d. %-21s [$%5.2f]%n", 4, "Ultimate Taco", kCostUltimate);
 		System.out.println(TacoStand.BAR);
 	}
 	
@@ -73,7 +79,7 @@ public class TacoStand
 	{
 		//tacos cost 75 cents each in supplies, keeping it simple
 	    int tacosEach = (int)(Math.round(budget / 0.75 / 4));
-
+		if(budget <= TacoStand.totalFunds){
 	    TacoStand.totalFunds -= budget;
 
 	    TacoStand.numAsada += tacosEach;
@@ -81,7 +87,11 @@ public class TacoStand
 	    TacoStand.numLengua += tacosEach;
 	    TacoStand.numUltimate += tacosEach;
 
-		return true;  //TODO: this is stubbed, replace this line with your actual code!
+		return true;
+		}
+		else{
+			return false;
+		}  
 	}
 
 	/**
@@ -93,7 +103,33 @@ public class TacoStand
 	 */
 	public static void updateTotalFunds(int tacoOption, int numTacos)
 	{
-		//TODO: this is stubbed, replace this line with your actual code!
+		boolean available = true;
+		switch(tacoOption){
+		case 1:
+			available = areTacosAvailable(tacoOption, numTacos);
+			if(available){
+				TacoStand.totalFunds += (numTacos * kCostCAsada);
+				TacoStand.numAsada -= numTacos;
+			}
+		case 2:
+			available = areTacosAvailable(tacoOption, numTacos);
+			if(available){
+				TacoStand.totalFunds += (numTacos * kCostPAsado);
+				TacoStand.numPollo -= numTacos;
+			}
+		case 3:
+			available = areTacosAvailable(tacoOption, numTacos);
+			if(available){
+				TacoStand.totalFunds += (numTacos * kCostLengua);
+				TacoStand.numLengua -= numTacos;
+			}
+		case 4:
+			available = areTacosAvailable(tacoOption, numTacos);
+			if(available == true){
+				TacoStand.totalFunds += (numTacos * kCostUltimate);
+				TacoStand.numUltimate -= numTacos;
+			} 
+		}
 	}
 	
 	
@@ -107,6 +143,20 @@ public class TacoStand
 	 */
 	public static boolean areTacosAvailable(int tacoOption, int numTacos)
 	{
-		return false; //TODO: this is stubbed, replace this line with your actual code!
+		if(tacoOption == 1 && numTacos <= numAsada){
+			return true;			
+		}
+		if(tacoOption == 2 && numTacos <= numPollo){
+			return true;
+		}
+		if(tacoOption == 3 && numTacos <= numLengua){
+			return true;
+		}
+		if(tacoOption == 4 && numTacos <= kCostUltimate){
+			return true;
+		}
+		else{
+			return false;
+		} 
 	}
 }

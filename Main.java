@@ -1,6 +1,6 @@
+// PARTNER NAME: John Musciano
 // PARTNER NAME:
-// PARTNER NAME:
-// CS111 SECTION #:
+// CS111 SECTION #: 160
 // DATE:
 
 public class Main
@@ -76,9 +76,12 @@ public class Main
 	 * 
 	 * @param numTacos
 	 */
-	public static void printConfirmation(int numTacos) //TODO: upgrade per documentation
+	public static void printConfirmation(int numTacos) 
 	{
+		
+		String tacoString =  numTacos + "$s";
 		System.out.println("Here you go, buen provecho!");
-		System.out.println("🌮");
+		System.out.printf(tacoString, "🌮");
+		System.out.println();
 	}
 }
